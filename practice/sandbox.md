@@ -20,7 +20,7 @@ git log --oneline -5
 
 ## Scratch area (edit freely)
 
-Today's goal: learn custom commands and git basics.
+Today's goal: learn custom commands and git basics in claude crash course.
 
 Favorite editor: Cursor
 
