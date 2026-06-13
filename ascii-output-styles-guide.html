@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code Output Styles Guide</title>
+  <style>
+    :root {
+      --bg: #101114;
+      --panel: #181b20;
+      --panel-soft: #20242b;
+      --text: #f2f0e8;
+      --muted: #b8b2a4;
+      --line: #6ee7b7;
+      --accent: #facc15;
+      --accent-2: #67e8f9;
+      --danger: #fb7185;
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        var(--bg);
+      background-size: 28px 28px;
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.7;
+    }
+
+    a {
+      color: var(--accent-2);
+    }
+
+    .page {
+      width: min(100% - 32px, 980px);
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    .topline,
+    .divider,
+    .footer-rule {
+      color: var(--line);
+      font-family: "Courier New", Consolas, monospace;
+      letter-spacing: 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .masthead {
+      border: 1px solid var(--line);
+      background: rgba(24, 27, 32, 0.94);
+      box-shadow: 0 18px 50px var(--shadow);
+      padding: 28px;
+    }
+
+    .kicker,
+    .meta,
+    .label,
+    code,
+    pre,
+    .button {
+      font-family: "Courier New", Consolas, monospace;
+    }
+
+    .kicker {
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin-top: 16px;
+      font-size: clamp(2.2rem, 7vw, 5rem);
+      letter-spacing: 0;
+    }
+
+    .deck {
+      max-width: 720px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 1.12rem;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .ascii-hero {
+      margin-top: 28px;
+      border: 1px dashed var(--accent-2);
+      background: #0b0c0f;
+      color: var(--accent-2);
+      padding: 18px;
+      overflow-x: auto;
+    }
+
+    .ascii-hero pre,
+    .code-card pre {
+      margin: 0;
+      line-height: 1.2;
+      font-size: clamp(0.72rem, 2.4vw, 0.95rem);
+    }
+
+    main {
+      display: grid;
+      gap: 24px;
+      margin-top: 28px;
+    }
+
+    .article-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    article,
+    aside,
+    .takeaways,
+    .cta {
+      border: 1px solid rgba(110, 231, 183, 0.62);
+      background: rgba(24, 27, 32, 0.94);
+    }
+
+    article {
+      padding: 28px;
+    }
+
+    article section + section {
+      margin-top: 34px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(110, 231, 183, 0.28);
+    }
+
+    h2 {
+      color: var(--accent);
+      font-size: clamp(1.35rem, 3vw, 2rem);
+    }
+
+    h3 {
+      color: var(--accent-2);
+      font-size: 1.05rem;
+      margin-top: 22px;
+    }
+
+    p {
+      margin: 14px 0 0;
+    }
+
+    ul {
+      margin: 14px 0 0;
+      padding-left: 1.2rem;
+    }
+
+    li + li {
+      margin-top: 8px;
+    }
+
+    code {
+      background: #0b0c0f;
+      border: 1px solid rgba(110, 231, 183, 0.35);
+      color: var(--accent-2);
+      padding: 0.12rem 0.32rem;
+      font-size: 0.92em;
+    }
+
+    .code-card {
+      margin-top: 16px;
+      border: 1px solid rgba(103, 232, 249, 0.62);
+      background: #0b0c0f;
+      color: var(--text);
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .callout {
+      margin: 24px 0;
+      border-left: 5px solid var(--danger);
+      background: var(--panel-soft);
+      padding: 18px;
+    }
+
+    .callout p {
+      margin: 0;
+      color: var(--text);
+      font-size: 1.08rem;
+    }
+
+    aside {
+      position: sticky;
+      top: 18px;
+      padding: 18px;
+    }
+
+    .toc-title,
+    .label {
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .toc {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 0;
+    }
+
+    .toc li + li {
+      margin-top: 10px;
+    }
+
+    .toc a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .toc a:hover,
+    .toc a:focus {
+      color: var(--accent-2);
+      text-decoration: underline;
+    }
+
+    .style-table {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .style-row {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 12px;
+      border: 1px solid rgba(110, 231, 183, 0.35);
+      background: #0f1115;
+      padding: 12px;
+    }
+
+    .style-name {
+      color: var(--accent-2);
+      font-family: "Courier New", Consolas, monospace;
+      font-weight: 700;
+    }
+
+    .takeaways,
+    .cta {
+      padding: 24px 28px;
+    }
+
+    .takeaway-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .takeaway {
+      border: 1px dashed rgba(250, 204, 21, 0.7);
+      background: #0f1115;
+      padding: 14px;
+    }
+
+    .cta {
+      text-align: center;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 18px;
+      border: 1px solid var(--accent);
+      color: #0b0c0f;
+      background: var(--accent);
+      padding: 10px 16px;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      text-align: center;
+      font-family: "Courier New", Consolas, monospace;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 820px) {
+      .article-grid {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: static;
+      }
+
+      .takeaway-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        width: min(100% - 20px, 980px);
+        padding-top: 16px;
+      }
+
+      .masthead,
+      article,
+      .takeaways,
+      .cta {
+        padding: 20px;
+      }
+
+      .style-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="masthead">
+      <div class="topline">+--------------------------------------------------------------------+</div>
+      <p class="kicker">Claude Code Field Notes</p>
+      <h1>Output Styles, Cleaned Up</h1>
+      <p class="deck">A practical guide to using output styles as reusable response modes: what they are, where they live, and why they make Claude Code feel consistent across sessions.</p>
+      <div class="meta" aria-label="Article details">
+        <span>Author: Claude Code</span>
+        <span>Date: June 13, 2026</span>
+        <span>Format: Retro ASCII Blog</span>
+      </div>
+      <div class="ascii-hero" aria-label="ASCII hero block">
+        <pre>
+   ____        _               _      ____  _         _
+  / __ \ _   _| |_ _ __  _   _| |_   / ___|| |_ _   _| | ___  ___
+ | |  | | | | | __| '_ \| | | | __|  \___ \| __| | | | |/ _ \/ __|
+ | |__| | |_| | |_| |_) | |_| | |_    ___) | |_| |_| | |  __/\__ \
+  \____/ \__,_|\__| .__/ \__,_|\__|  |____/ \__|\__, |_|\___||___/
+                  |_|                           |___/
+
+  [ base prompt ] + [ style instructions ] => [ predictable output ]
+        </pre>
+      </div>
+      <div class="topline">+--------------------------------------------------------------------+</div>
+    </header>
+
+    <main>
+      <div class="article-grid">
+        <article>
+          <section id="definition">
+            <h2>What Output Styles Are</h2>
+            <p>Output styles are custom response formatting configurations for Claude Code CLI. They shape how Claude communicates: the structure, tone, level of detail, and presentation style used in replies.</p>
+            <p>Think of them as reusable working modes. One style might keep answers tight and bullet-heavy. Another might produce YAML. A publishing style can turn article requests into complete HTML pages with a defined layout.</p>
+          </section>
+
+          <section id="how-they-work">
+            <h2>How They Work</h2>
+            <p>Each output style appends instructions to Claude's system prompt. Those instructions become part of the assistant's operating context, so responses follow the style automatically while it is active.</p>
+            <div class="code-card" aria-label="System prompt flow">
+              <pre>
++----------------------+     +----------------------+     +----------------------+
+| Base Claude behavior | --> | Output style rules   | --> | Styled response      |
++----------------------+     +----------------------+     +----------------------+
+              </pre>
+            </div>
+            <p>The result is not just cosmetic. A style can influence whether Claude explains first, ships first, uses a specific file format, or follows a repeatable editorial structure.</p>
+          </section>
+
+          <section id="location">
+            <h2>Where Styles Live</h2>
+            <p>Styles can be global or project-specific. Project styles take precedence, which makes them useful for team conventions and repository-specific workflows.</p>
+            <div class="code-card" aria-label="Output style file locations">
+              <pre>
+Global styles:   ~/.claude/output-styles/
+Project styles:  {project}/.claude/output-styles/
+
+File format:     Markdown with YAML frontmatter
+Required field:  description
+Precedence:      Project > Global
+              </pre>
+            </div>
+          </section>
+
+          <div class="callout" role="note">
+            <p>"A good output style removes tiny repeated decisions. It lets the work start closer to finished."</p>
+          </div>
+
+          <section id="current-styles">
+            <h2>Example Styles</h2>
+            <p>Here are common styles you might see in a Claude Code setup, including the retro HTML publishing style used for this page.</p>
+            <div class="style-table" role="list" aria-label="Output style examples">
+              <div class="style-row" role="listitem">
+                <div class="style-name">default</div>
+                <div>Standard Claude behavior with no special response structure.</div>
+              </div>
+              <div class="style-row" role="listitem">
+                <div class="style-name">minimal-bullets</div>
+                <div>Concise bullet-point responses designed for quick scanning.</div>
+              </div>
+              <div class="style-row" role="listitem">
+                <div class="style-name">yaml-concise</div>
+                <div>Structured minimal responses formatted as YAML.</div>
+              </div>
+              <div class="style-row" role="listitem">
+                <div class="style-name">retro-ascii-blog</div>
+                <div>Complete HTML pages with ASCII-art inspired blog styling.</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="commands">
+            <h2>Command Reference</h2>
+            <p>Use the output-style command menu to inspect, switch, or create styles inside Claude Code.</p>
+            <div class="code-card" aria-label="Output style commands">
+              <pre>
+/output-style          List available styles
+/output-style {name}   Switch to a specific style
+/output-style:new      Create a new style
+              </pre>
+            </div>
+          </section>
+
+          <section id="capabilities">
+            <h2>What Styles Can Control</h2>
+            <ul>
+              <li><strong>Response format:</strong> bullets, YAML, HTML, prose, or another repeatable structure.</li>
+              <li><strong>Communication tone:</strong> formal, casual, technical, educational, terse, or editorial.</li>
+              <li><strong>Information density:</strong> concise answers, detailed walkthroughs, or comprehensive references.</li>
+              <li><strong>Task approach:</strong> whether to prioritize speed, thoroughness, teaching, or production-ready output.</li>
+              <li><strong>Workflow habits:</strong> how much explanation to include and when to provide deliverables.</li>
+            </ul>
+          </section>
+        </article>
+
+        <aside aria-label="Table of contents">
+          <div class="toc-title">Contents</div>
+          <ul class="toc">
+            <li><a href="#definition">What they are</a></li>
+            <li><a href="#how-they-work">How they work</a></li>
+            <li><a href="#location">Where they live</a></li>
+            <li><a href="#current-styles">Example styles</a></li>
+            <li><a href="#commands">Commands</a></li>
+            <li><a href="#capabilities">Capabilities</a></li>
+          </ul>
+          <div class="divider" aria-hidden="true">+------------------+</div>
+          <p><span class="label">Active idea:</span> turn repeatable preferences into reusable instructions.</p>
+        </aside>
+      </div>
+
+      <section class="takeaways" aria-labelledby="takeaways-title">
+        <h2 id="takeaways-title">Key Takeaways</h2>
+        <div class="takeaway-list">
+          <div class="takeaway">
+            <div class="label">01</div>
+            <p>Output styles are reusable response modes, not just visual themes.</p>
+          </div>
+          <div class="takeaway">
+            <div class="label">02</div>
+            <p>Project styles keep a repository's communication patterns consistent.</p>
+          </div>
+          <div class="takeaway">
+            <div class="label">03</div>
+            <p>Clear style rules are best when they produce usable output immediately.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta" aria-labelledby="cta-title">
+        <div class="divider" aria-hidden="true">+==============================+</div>
+        <h2 id="cta-title">Build the Style You Want to Reuse</h2>
+        <p>Start with the output you keep asking for twice. Turn that pattern into a style, give it a specific job, and let it carry the formatting work next time.</p>
+        <a class="button" href="#commands">View Commands</a>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-rule">+--------------------------------------------------------------------+</div>
+      <p>End of guide | Clean retro ASCII edition | No external libraries</p>
+    </footer>
+  </div>
+</body>
+</html>
